@@ -30,16 +30,20 @@ export const reqUpdateCategory = ({categoryId, categoryName}) => ajax(BASE + '/m
 // 获取一个分类
 export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', {categoryId})
 
-// 获取商品分页列表
+// 获取漫画分页列表
 export const reqMangas = (pageNum, pageSize) => ajax(BASE + '/manage/manga/list', {pageNum, pageSize})
 
-// 更新商品的状态(上架/下架)
+// 获取推荐漫画
+export const reqMangasRecommendation = (recommendation) => ajax(BASE + '/manage/manga/searchRecommendation', {recommendation})
+
+// 更新漫画的状态(上架/下架)
 export const reqUpdateStatus = (mangaId, status) => ajax(BASE + '/manage/manga/updateStatus', {mangaId, status}, 'POST')
 
-
+// 更新漫画的状态(上架/下架)
+export const reqUpdateRecommendation = (mangaId, recommendation) => ajax(BASE + '/manage/manga/updateRecommendation', {mangaId, recommendation}, 'POST')
 
 /*
-搜索商品分页列表 (根据商品名称/商品描述)
+搜索漫画分页列表 (根据漫画名称/漫画描述)
 searchType: 搜索的类型, productName/productDesc
  */
 export const reqSearchMangas = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE + '/manage/manga/search', {
@@ -55,13 +59,44 @@ export const reqSearchMangas = ({pageNum, pageSize, searchName, searchType}) => 
   productDesc: searchName,
 })*/
 
-// 删除指定名称的图片
+// 删除指定名称的漫画
 export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete', {name}, 'POST')
 
-// 添加/修改商品
+// 添加/修改漫画
 export const reqAddOrUpdateManga = (manga) => ajax(BASE + '/manage/manga/' + ( manga._id?'update':'add'), manga, 'POST')
 // 修改商品
-// export const reqUpdateProduct = (product) => ajax(BASE + '/manage/product/update', product, 'POST')
+// export const reqUpdateProduct = (manga) => ajax(BASE + '/manage/manga/update', manga, 'POST')
+
+
+
+// 获取分话分页列表
+export const reqEpisodes = (pageNum, pageSize,mangaId) => ajax(BASE + '/manage/episode/list', {pageNum, pageSize,mangaId})
+
+// 获取指定分话
+export const reqEpisode = (name) => ajax(BASE + '/manage/episode/getEpisode', {name})
+
+
+// 更新分话的状态(上架/下架)
+export const reqEpisodeUpdateStatus = (episodeId, status) => ajax(BASE + '/manage/episode/updateStatus', {episodeId, status}, 'POST')
+
+
+
+/*
+搜索分话分页列表 (根据漫画名称/漫画描述)
+searchType: 搜索的类型, productName/productDesc
+ */
+export const reqSearchEpisodes = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE + '/manage/episode/search', {
+  pageNum,
+  pageSize,
+  [searchType]: searchName,
+})
+
+
+// 删除指定名称的分话
+export const reqDeleteEpisodesImg = (name) => ajax(BASE + '/manage/img/delete', {name}, 'POST')
+
+// 添加/修改分话
+export const reqAddOrUpdateEpisode = (episode) => ajax(BASE + '/manage/episode/' + ( episode._id?'update':'add'), episode, 'POST')
 
 
 // 获取所有角色的列表

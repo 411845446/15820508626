@@ -1,0 +1,46 @@
+.app-layout {
+  width: 1160px;
+  padding: 40px 48px;
+  margin: 74px auto 80px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(106, 115, 133, .08);
+  border-radius: 2px;
+
+  .manga-detail {
+    .manga-div-left {
+      display: inline-block;
+      margin-left: 300px;
+
+      .manga-img {
+        border: 0px;
+        width: 198px;
+        height: 264px;
+      }
+    }
+
+    .manga-div-right {
+      display: inline-block;
+      margin-left: 200px;
+      margin-top: 0px;
+
+      .manga-title {
+        fmargin: 0 0 24px;
+        font-size: 32px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .87);
+      }
+    }
+  }
+
+}
+
+.manga-detail:after { /*添加一个伪元素选择器，利用CSS让父元素在其最后添加一个块元素，并清除浮动*/
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.section-title {
+  font-size: 24px;
+  color: rgba(0, 0, 0, .87);
+}

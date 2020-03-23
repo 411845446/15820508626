@@ -1,14 +1,26 @@
 import React, {Component} from 'react'
-import './episode.less'
+import {Switch, Route, Redirect} from 'react-router-dom'
+
+
+import EpisodeHome from './home'
+import EpisodeAddUpdate from './add-update'
+import ShowEpisodes from "./showepisodes";
+import viewEpisode from "./viewepisode";
+
 
 /*
-Home路由组件
+漫画路由
  */
-
 export default class Episode extends Component {
     render() {
         return (
-            <div>aa</div>
+            <Switch>
+                <Route path='/episode' component={EpisodeHome} exact/>
+                <Route path='/episode/addUpdate' component={EpisodeAddUpdate}/>
+                <Route path='/episode/showEpisodes' component={ShowEpisodes}/>
+                <Route path='/episode/viewEpisodes' component={viewEpisode}/>
+                <Redirect to='/episode'/>
+            </Switch>
         )
     }
 }

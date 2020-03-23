@@ -10,7 +10,7 @@ import {
 } from 'antd'
 
 import LinkButton from '../../components/link-button'
-import {reqMangas, reqSearchMangas, reqUpdateStatus} from '../../api'
+import {reqMangas, reqSearchMangas, reqUpdateRecommendation, reqUpdateStatus} from '../../api'
 import {PAGE_SIZE} from '../../utils/constants'
 
 const Option = Select.Option
@@ -69,6 +69,9 @@ export default class MangaHome extends Component {
             case 7:
               day='周日';
               break;
+            default:
+              day='没有填写'
+              break;
           }
           return(
               <span>{day}</span>
@@ -82,6 +85,7 @@ export default class MangaHome extends Component {
         // dataIndex: 'status',
         render: (manga) => {
           const {status, _id} = manga
+          console.log(_id)
           const newStatus = status===1 ? 2 : 1
           return (
             <span>
@@ -92,6 +96,27 @@ export default class MangaHome extends Component {
                 {status===1 ? '下架' : '上架'}
               </Button>
               <span>{status===1 ? '在上架' : '已下架'}</span>
+            </span>
+          )
+        }
+      },
+      {
+        width: 100,
+        title: '状态',
+        // dataIndex: 'status',
+        render: (manga) => {
+          const {recommendation, _id} = manga
+          console.log(_id)
+          const newRecommendation = recommendation===1 ? 0 : 1
+          return (
+              <span>
+              <Button
+                  type='primary'
+                  onClick={() => this.updateRecommendation(_id, newRecommendation)}
+              >
+                {recommendation===1 ? '不推荐' : '推荐'}
+              </Button>
+              <span>{recommendation===1 ? '已推荐' : '没推荐'}</span>
             </span>
           )
         }
@@ -143,9 +168,22 @@ export default class MangaHome extends Component {
   更新指定漫画的状态
    */
   updateStatus = async (mangaId, status) => {
+    console.log(mangaId)
     const result = await reqUpdateStatus(mangaId, status)
     if(result.status===0) {
-      message.success('更新漫画成功')
+      message.success('更新漫画状态成功')
+      this.getMangas(this.pageNum)
+    }
+  }
+
+  /*
+  更新指定漫画的状态
+   */
+  updateRecommendation = async (mangaId, recommendation) => {
+    console.log(mangaId)
+    const result = await reqUpdateRecommendation(mangaId, recommendation)
+    if(result.status===0) {
+      message.success('更新漫画推荐成功')
       this.getMangas(this.pageNum)
     }
   }

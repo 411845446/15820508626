@@ -6,12 +6,12 @@ const menuList = [
     isPublic: true, // 公开的
   },
   {
-    title: '商品',
+    title: '漫画',
     key: '/products',
     icon: 'appstore',
     children: [ // 子菜单列表
       {
-        title: '品类管理',
+        title: '分类管理',
         key: '/category',
         icon: 'bars'
       },
@@ -61,12 +61,12 @@ const menuList = [
       },
     ]
   },
-
+/*
   {
     title: '订单管理',
     key: '/order',
     icon: 'windows',
-  },
+  },*/
 ]
 
 export default menuList
