@@ -7,7 +7,7 @@ import LeftNav from '../../components/left-nav'
 import Header from '../../components/header'
 import Home from '../home/home'
 import Category from '../category/category'
-import Manga from '../product/manga'
+import Manga from '../manga/manga'
 import Role from '../role/role'
 import User from '../user/user'
 import Bar from '../charts/bar'
@@ -15,8 +15,7 @@ import Line from '../charts/line'
 import Pie from '../charts/pie'
 import NotFound from '../not-found/not-found'
 import Order from '../order/order'
-import MangaList from '../manga-index/manga'
-import Episode from "../episode/episode";
+import Episode from '../episode/episode'
 
 const { Footer, Sider, Content } = Layout
 
@@ -51,7 +50,6 @@ export default class Admin extends Component {
               <Route path="/charts/line" component={Line}/>
               <Route path="/order" component={Order}/>
               <Route path="/episode" component={Episode}/>
-              <Route path="/mangaList" component={MangaList}/>
               <Route component={NotFound}/>
             </Switch>
           </Content>

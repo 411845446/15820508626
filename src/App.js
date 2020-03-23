@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 import Login from './pages/login/login'
 import Admin from './pages/admin/admin'
+import MangaIndex from "./pages/manga-index/mangaindex";
 
 /*
 应用的根组件
@@ -14,8 +15,9 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Switch> {/*只匹配其中一个*/}
-          <Route path='/login' component={Login}></Route>
-          <Route path='/' component={Admin}></Route>
+            <Route path='/mangaindex' component={MangaIndex}></Route>
+            <Route path='/login' component={Login}></Route>
+            <Route path='/' component={Admin}></Route>
         </Switch>
       </BrowserRouter>
     )
