@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@antv/data-set": "^0.10.2",
-    "antd": "^3.17.0",
+    "antd": "^3.24.0",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
     "bizcharts": "^3.5.2",
@@ -51,5 +51,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "jquery": "^3.4.1"
+  }
 }

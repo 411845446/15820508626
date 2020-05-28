@@ -15,7 +15,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Switch> {/*只匹配其中一个*/}
-            <Route path='/mangaindex' component={MangaIndex}></Route>
+            <Route path='/mangaIndex' component={MangaIndex}></Route>
             <Route path='/login' component={Login}></Route>
             <Route path='/' component={Admin}></Route>
         </Switch>
