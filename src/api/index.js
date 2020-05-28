@@ -33,6 +33,9 @@ export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', 
 // 获取漫画分页列表
 export const reqMangas = (pageNum, pageSize) => ajax(BASE + '/manage/manga/list', {pageNum, pageSize})
 
+// 获取指定漫画
+export const reqManga = (mangaId) => ajax(BASE + '/manage/manga/info', {mangaId})
+
 // 获取推荐漫画
 export const reqMangasRecommendation = (recommendation) => ajax(BASE + '/manage/manga/searchRecommendation', {recommendation})
 
@@ -70,10 +73,13 @@ export const reqAddOrUpdateManga = (manga) => ajax(BASE + '/manage/manga/' + ( m
 
 
 // 获取分话分页列表
-export const reqEpisodes = (pageNum, pageSize,mangaId) => ajax(BASE + '/manage/episode/list', {pageNum, pageSize,mangaId})
+export const reqEpisodesPage = (pageNum, pageSize, mangaId) => ajax(BASE + '/manage/episode/listPage', {pageNum, pageSize,mangaId})
 
 // 获取指定分话
 export const reqEpisode = (name) => ajax(BASE + '/manage/episode/getEpisode', {name})
+
+//获取分话列表
+export const reqEpisodes = (mangaId) => ajax(BASE + '/manage/episode/list', {mangaId})
 
 
 // 更新分话的状态(上架/下架)

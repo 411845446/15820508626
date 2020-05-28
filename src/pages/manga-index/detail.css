@@ -1,0 +1,97 @@
+.manga-cover {
+    width: 240px;
+    height: 320px;
+    background-color: #fafafa;
+}
+
+.manga-detail{
+    font-size: 14px;
+    line-height: 2;
+    color: rgba(0,0,0,.34);
+}
+
+.manga-title {
+    margin: 0 0 11px;
+    font-size: 28px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .87);
+}
+
+.author-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .56);
+    white-space: nowrap;
+}
+
+.m-top{
+    margin-top: 20px;
+}
+
+.manga-button {
+    background-color: #149dff;
+    color: #fff;
+    padding: 0px 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    box-sizing: border-box
+}
+
+.continue-read-btn {
+    width: 200px;
+    height: 44px;
+    margin-right: 16px;
+    font-size: 16px;
+}
+
+.section-title {
+    margin-top: 48px;
+    font-size: 24px;
+    color: rgba(0, 0, 0, .87);
+    height: 30px;
+}
+
+.episode-list-component {
+    margin-top: 12px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+}
+
+.list-item {
+    position: relative;
+    width: 200px;
+    height: 48px;
+    padding: 0 12px;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, .87);
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: visible;
+}
+
+.app-button {
+    background-color: transparent;
+    border: 1;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    cursor: pointer;
+}
+
+.short-title {
+    padding-right: 8px;
+}

@@ -10,7 +10,7 @@ import {
 } from 'antd'
 
 import LinkButton from '../../components/link-button'
-import {reqEpisodes, reqSearchEpisodes} from '../../api'
+import {reqEpisodesPage, reqSearchEpisodes} from '../../api'
 import {PAGE_SIZE} from '../../utils/constants'
 import {formateDate} from "../../utils/dateUtils";
 
@@ -81,7 +81,7 @@ export default class ShowEpisodes extends Component {
         if (searchName) {
             result = await reqSearchEpisodes({pageNum, pageSize: PAGE_SIZE, searchName, searchType})
         } else { // 一般分页请求 发异步ajax请求, 获取数据
-            result = await reqEpisodes(pageNum, PAGE_SIZE, _id)
+            result = await reqEpisodesPage(pageNum, PAGE_SIZE, _id)
         }
         // 在请求完成后, 隐藏loading
         this.setState({loading: false})
@@ -112,7 +112,7 @@ export default class ShowEpisodes extends Component {
             result = await reqSearchEpisodes({pageNum, pageSize: PAGE_SIZE, searchName, searchType})
         } else { // 一般分页请求
             console.log('111'+_id)
-            result = await reqEpisodes(pageNum, PAGE_SIZE,_id)
+            result = await reqEpisodesPage(pageNum, PAGE_SIZE,_id)
         }
 
         this.setState({loading: false}) // 隐藏loading

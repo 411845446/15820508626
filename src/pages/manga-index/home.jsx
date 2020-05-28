@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
-import './home.less'
+import './home.css'
 import {reqCategory,reqMangasRecommendation} from "../../api";
 import LinkButton from "../../components/link-button";
-import {Layout} from 'antd';
+import {Row,Col} from 'antd';
 import {BASE_IMG_URL} from "../../utils/constants";
-import Card from "antd/es/card";
-import Meta from "antd/es/card/Meta";
-
-const { Content, Footer } = Layout;
-
+import '../../utils/common.css'
+import Spin from "antd/es/spin";
 
 /*
 Home路由组件
@@ -17,46 +14,30 @@ export default class MangaHome extends Component {
 
     state = {
         mangas: [], // 漫画的数组
-        loading: false, // 是否正在加载中
+        isLoading: false, // 是否正在加载中
+        initLoading:false,
+        cName1: '', // 一级分类名称
+        cName2: '', // 二级分类名称
     }
 
-    /*
-  初始化table的列的数组
-   */
-    initColumns = () => {
-        this.columns = [
-            {
-                width:100,
-                height:100,
-                title: '',
-                render: (img) => (
-                    <img key={img}
-                         src={img}
-                         className="manga-img"
-                         alt="img"></img>
-                )
-            },
 
-        ];
-    }
 
     /*
       获取指定页码的列表数据显示
        */
     getMangas = async () => {
-        this.setState({loading: true}) // 显示loading
 
-        // 如果搜索关键字有值, 说明我们要做搜索分页
         let result = await reqMangasRecommendation(1)
         console.log(result)
-        this.setState({loading: false}) // 隐藏loading
         if (result.status === 0) {
             // 取出分页数据, 更新状态, 显示分页列表
             const {list} = result.data
             this.setState({
-                mangas: list
+                mangas:list,
+                initLoading:true,
             })
         }
+
     }
 
     getCategory= async (item) => {
@@ -66,8 +47,8 @@ export default class MangaHome extends Component {
         if(pCategoryId==='0') { // 一级分类下的漫画
             const result = await reqCategory(categoryId)
             const cName1 = result.data.name
-           // const cName2 = ''
-            return cName1.toString()
+            const cName2 =''
+            return {cName1,cName2}
         } else { // 二级分类下的漫画
             /*
             //通过多个await方式发多个请求: 后面一个请求是在前一个请求成功返回之后才发送
@@ -79,75 +60,137 @@ export default class MangaHome extends Component {
 
             // 一次性发送多个请求, 只有都成功了, 才正常处理
             const results = await Promise.all([reqCategory(pCategoryId), reqCategory(categoryId)])
-            console.log(results+'1234')
             const cName1 = results[0].data.name
-           // const cName2 = results[1].data.name
-            return cName1.toString()
+            const cName2 = results[1].data.name
+            return {cName1,cName2}
         }
 
     }
 
+    initManga =() =>{
+        let list = this.state.mangas
+        list.map((item,index)=>{
+            this.getCategory(item).then(res=>{
+                const{cName1,cName2} = res
+                item.categoryName = cName1+cName2
+                console.log(item.categoryName)
+            })
+            console.log(list.length+'````'+index)
+            if(index==list.length-1){
+                this.setState({
+                    mangas: list,
+                    isLoading:true,
+                })
+            }
+        })
+    }
 
 
-    componentWillMount() {
-        this.initColumns()
+   componentWillMount() {
+       this.getMangas()
+       setTimeout(()=>{
+           const {initLoading} =this.state
+           if(initLoading){
+               this.initManga()
+           }
+           console.log(this.state.mangas)
+       },500)
     }
 
     componentDidMount() {
-        this.getMangas()
+
     }
 
     render() {
 
         // 取出状态数据
-        const {mangas} = this.state
+        const {isLoading} =this.state
+        let mangas
+        if(isLoading) {
+                mangas = this.state.mangas
+                console.log(JSON.stringify(mangas) + '````````')
 
-
-        return (
-            <Layout className="layout">
-                <div className={"header"}>
-                    <LinkButton onclick={""}><span className={"nav"}>冒险</span></LinkButton>
-                    <LinkButton><span className={"nav"}>热血</span></LinkButton>
-                    <LinkButton><span className={"nav"}>搞笑</span></LinkButton>
-                    <LinkButton><span className={"nav"}>恋爱</span></LinkButton>
-                    <LinkButton><span className={"nav"}>nav 2</span></LinkButton>
-                    <LinkButton><span className={"nav"}>nav 3</span></LinkButton>
-                    <LinkButton><span className={"nav"}>nav 1</span></LinkButton>
-                    <LinkButton><span className={"nav"}>nav 2</span></LinkButton>
-                    <LinkButton><span className={"nav"}>nav 3</span></LinkButton>
-                </div>
-                <Content style={{padding: '0 50px'}}>
-                    <div className="site-layout-content">
-                       {/* <Table
-                            rowKey='img'
-                            loading={loading}
-                            dataSource={list}
-                            columns={this.columns}
-                            pagination={{defaultPageSize: 8}}
-                        />*/}
-                        <div className={"left"}>
-                            <h1 className={"recommend-title"}>本周推荐</h1>
-                        {
-                            mangas.map((item,index) => {
-                                return (
-                                    <Card key={index} className={"card"}
-                                        hoverable
-                                        style={{width: 200}}
-                                        cover={<img alt="example"
-                                                    src={BASE_IMG_URL +item.imgs}/>}
-                                          onClick={() => this.props.history.push('/mangaindex/detail',{item})}
-                                    >
-                                               <Meta title={item.name} description={item.desc}/>
-                                    </Card>
-                                )
-                            })
-                        }
-                        </div>
-                        <div></div>
+            return (
+                <div>
+                    <div className={"header"}>
+                        <LinkButton><span className={"nav"}>冒险</span></LinkButton>
+                        <LinkButton><span className={"nav"}>热血</span></LinkButton>
+                        <LinkButton><span className={"nav"}>搞笑</span></LinkButton>
+                        <LinkButton><span className={"nav"}>恋爱</span></LinkButton>
+                        <LinkButton><span className={"nav"}>nav 2</span></LinkButton>
+                        <LinkButton><span className={"nav"}>nav 3</span></LinkButton>
+                        <LinkButton><span className={"nav"}>nav 1</span></LinkButton>
+                        <LinkButton><span className={"nav"}>nav 2</span></LinkButton>
+                        <LinkButton><span className={"nav"}>nav 3</span></LinkButton>
                     </div>
-                </Content>
-                <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
-            </Layout>
+                    <Row>
+                        <Col span={4}>col-4</Col>
+                        <Col span={16} className={"m-auto p-relative"}>
+                            <Col span={18}>
+                                <h1 className={"home-section-title"}>本周推荐</h1>
+                                {
+                                        mangas.map((item, index) => {
+                                            let id = item._id
+                                            let idArr = id.split("\"")
+                                            id = idArr[0]
+                                            return (
+                                                <div key={index}
+                                                     className={"home-manga-card-vertical dp-i-block v-top border-box home-list-item"}>
+                                                    <div className={"home-manga-cover-section p-relative"}>
+                                                        <a
+                                                            href={'/mangaIndex/detail?id=' + (id)}
+                                                            target="_blank"
+                                                        >
+                                                            <img alt="example"
+                                                                 src={BASE_IMG_URL + item.imgs}
+                                                                 className={"home-manga-cover-image p-relative bg-cover bg-center bg-no-repeat"}
+                                                            />
+                                                        </a>
+                                                        <div className="text-info-section">
+                                                            <div
+                                                                className={"home-manga-title-text t-no-wrap t-over-hidden"}>{item.name}</div>
+                                                            <div
+                                                                className={"home-supporting-text t-no-wrap t-over-hidden"}>{item.categoryName}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                }
+                            </Col>
+                            <Col span={6} className={"home-rank-list-component border-box dp-i-block v-top"}>
+                                <div className={"home-title-row p-relative"}>
+                                    <h2 className={"home-section-title ts-dot-4"}>排行榜</h2>
+                                    <a href="#" target="_blank"
+                                       className="home-ranking-jump p-absolute ts-dot-4">更多></a>
+                                </div>
+                                <div className="">
+                                    <a>
+                                        <div className="home-list-item">
+                                            1234
+                                        </div>
+                                    </a>
+                                    <a>
+                                        <div className="home-list-item">
+                                            1234
+                                        </div>
+                                    </a>
+                                    <a>
+                                        <div className="home-list-item">
+                                            1234
+                                        </div>
+                                    </a>
+                                </div>
+                            </Col>
+                        </Col>
+                        <Col span={4}>col-4</Col>
+                    </Row>
+                    <div style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</div>
+                </div>
+            )
+        }
+        return (
+            <div><Spin/></div>
         )
     }
 }
